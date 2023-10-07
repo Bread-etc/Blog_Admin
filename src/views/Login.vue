@@ -1,7 +1,7 @@
 <!-- Login.vue for blog_admin -->
 <template>
     <div>
-
+        123456
     </div>
 </template>
 
