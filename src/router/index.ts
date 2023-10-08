@@ -1,6 +1,6 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
-const routes = [
+const routes: Array<RouteRecordRaw> = [
     {
         path: '/login',
         name: 'login',
@@ -13,7 +13,8 @@ const routes = [
         path: '/admin',
         name: 'admin',
         meta: {
-            title: '管理'
+            title: '管理',
+            requiresAuth: true,
         },
         component: () => import("../views/Admin.vue")
     }
