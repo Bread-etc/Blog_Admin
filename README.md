@@ -18,3 +18,8 @@
 
 ### 2023/10/10
 - 修改`login`页面样式
+
+### 2023/10/12
+- 禁用`preflight.css`
+- 加入`@vicon/fluent`
+- 修改`login.vue`

@@ -4,22 +4,29 @@
     <div
       class="flex flex-col items-center w-2/5 p-8 rounded-lg shadow-lg shadow-slate-700 backdrop-blur-2xl"
     >
-      <img src="../../public/admin_logo.svg">
-      <h2 class="">
+      <n-icon :size="70">
+        <Code24Filled />
+      </n-icon>
+      <h2 class="m-0 p-2 text-2xl">
         Sign in
       </h2>
-      <div class="">
+      <div class="p-2 text-base">
         Sign in and start your editing!
       </div>
-      <div>
+      <div class="p-2 text-base">
         account
       </div>
-      <div>
+      <div class="p-2 text-base">
         Password
       </div>
-      <button class="">
-        Log in
-      </button>
+      <n-button class="p-2 text-base font-bold" ghost type="success">
+        <template #icon>
+          <n-icon size="23">
+            <Fingerprint24Regular />
+          </n-icon>
+        </template>
+       Log in
+      </n-button>
     </div>
   </div>
 </template>
@@ -27,6 +34,8 @@
 <script lang="ts" setup>
 import * as THREE from "three";
 import WAVES from "vanta/src/vanta.waves";
+import { Code24Filled, Fingerprint24Regular } from '@vicons/fluent';
+import { NIcon, NButton } from 'naive-ui';
 import { onMounted, onBeforeUnmount, ref } from "vue";
 
 // 使用ref引用挂载区域

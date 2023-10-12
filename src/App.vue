@@ -1,13 +1,17 @@
 <script setup lang="ts">
+import { darkTheme } from 'naive-ui';
 
 </script>
 
 <template>
-  <div class="font-sans box-content">
+  <n-config-provider :theme="darkTheme">
     <router-view />
-  </div>
+  </n-config-provider>
 </template>
 
 <style scoped lang="css">
+html, body {
+  margin: 0;
+}
 
 </style>
