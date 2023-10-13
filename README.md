@@ -23,3 +23,7 @@
 - 禁用`preflight.css`
 - 加入`@vicon/fluent`
 - 修改`login.vue`
+
+### 2023/10/13
+- 改造`login`样式
+- 初步加入路由守卫
