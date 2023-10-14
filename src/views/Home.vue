@@ -1,7 +1,7 @@
-<!-- Admin.vue for blog_admin -->
+<!-- Home.vue for blog_admin -->
 <template>
     <div>
-
+        首页
     </div>
 </template>
 

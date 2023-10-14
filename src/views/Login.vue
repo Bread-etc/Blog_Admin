@@ -16,23 +16,22 @@
       <n-form 
         class="p-2 text-base"
         ref="formRef"
-        :model="formValue"
+        :model="model"
         :rules="rules"
-        :size="size"
         >
         <n-form-item label="account" path="user.account">
-          <n-input v-model:value="formValue.user.account" placeholder="Please enter your account"></n-input>
+          <n-input v-model:value="model.account" placeholder="请输入"></n-input>
         </n-form-item>
-        <n-form-item>
-          <n-input v-model:value="formValue.user.password" placeholder="Please enter your password"></n-input>
+        <n-form-item label="password" path="user.password" type="password">
+          <n-input v-model:value="model.password" placeholder="请输入"></n-input>
         </n-form-item>
         <n-form-item>
           <n-button 
-            class="p-2 text-base font-bold" 
+            class="p-2 text-base font-bold"
+            round
             ghost
-            attr-type="button" 
-            type="success"
-            @click="handleValidateClick"
+            type="primary"
+            @click="handleValidateButtonClick"
             >
             <template #icon>
               <n-icon size="23">
@@ -51,7 +50,7 @@
 import * as THREE from "three";
 import WAVES from "vanta/src/vanta.waves";
 import { Code24Filled, Fingerprint24Regular } from '@vicons/fluent';
-import { NIcon, NButton, NForm, NFormItem, NInput, FormInst, useMessage } from 'naive-ui';
+import { NIcon, NButton, FormInst, FormItemInst, FormItemRule, FormRules, useMessage } from 'naive-ui';
 import { onMounted, onBeforeUnmount, ref } from "vue";
 
 // 使用ref引用挂载区域
@@ -84,42 +83,48 @@ onBeforeUnmount(() => {
   }
 });
 
+// 表单内容
+interface ModelType {
+  account: string | null
+  password: string | null
+};
 
 const formRef = ref<FormInst | null>(null);
 const message = useMessage();
-
-const size = ref<'small' | 'medium' | 'large'>('medium');
-const formValue = ref({
-  user: {
-    account: 'admin',
-    password: '123456'
-  }
+const model = ref<ModelType>({
+  account: null,
+  password: null
 });
-const rules = {
-  user: {
-    account: {
+const rules: FormRules = {
+  account: [
+    {
       required: true,
-      message: 'Please enter your account',
-      trigger: 'blur'
-    },
-    password: {
-      required: true,
-      message: 'Please enter your password',
-      trigger: 'blur'
+      validator(rule: FormItemRule, value: string) {
+        if (!value) {
+          return new Error('请填写账号')
+        }
+        return true
+      },
+      trigger: ['input', 'blur']
     }
-  }
-}
-
-const handleValidateClick = (event: MouseEvent) => {
-  event.preventDefault();
+  ],
+  password: [
+    {
+      required: true,
+      message: '请输入密码'
+    }
+  ]
+};
+function handleValidateButtonClick(e: MouseEvent) {
+  e.preventDefault()
   formRef.value?.validate((errors) => {
     if(!errors) {
-      message.success('Valid');
+      message.success('验证成功')
     } else {
-      console.log(errors);
-      message.error('Invalid');
-    };
-  });
+      console.log(errors)
+      message.error('验证失败')
+    }
+  })
 }
 </script>
 
