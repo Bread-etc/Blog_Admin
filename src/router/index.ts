@@ -29,12 +29,12 @@ const router = createRouter({
 });
 
 // 注册全局前置守卫
-router.beforeEach((to, from, next) => {
-    // if(isLogin) {
-    //     next()
-    // } else {
-    //     next({ name: 'Home' })
-    // }
-});
+// router.beforeEach((to, from, next) => {
+//     // if(isLogin) {
+//     //     next()
+//     // } else {
+//     //     next({ name: 'Home' })
+//     // }
+// });
 
 export default router;

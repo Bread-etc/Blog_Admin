@@ -7,38 +7,41 @@
       <n-icon :size="70">
         <Code24Filled />
       </n-icon>
-      <h2 class="m-0 p-2 text-2xl">
+      <h2 class="m-0 p-2 text-2xl text-center">
         Sign in
       </h2>
-      <div class="p-2 text-base">
-        Sign in and start your editing!
+      <div class="text-base underline truncate">
+        Login to start your editing!
       </div>
       <n-form 
-        class="p-2 text-base"
+        class="p-4 text-base font-sans"
         ref="formRef"
         :model="model"
         :rules="rules"
+        size="small"
+        :show-feedback="false"
+        :show-require-mark="false"
         >
-        <n-form-item label="account" path="user.account">
-          <n-input v-model:value="model.account" placeholder="请输入"></n-input>
+        <n-form-item label="account" path="user.account" class="p-1">
+          <n-input v-model:value="model.user.account" placeholder=""></n-input>
         </n-form-item>
-        <n-form-item label="password" path="user.password" type="password">
-          <n-input v-model:value="model.password" placeholder="请输入"></n-input>
+        <n-form-item label="password" path="user.password" type="password" class="p-1">
+          <n-input v-model:value="model.user.password" placeholder=""></n-input>
         </n-form-item>
-        <n-form-item>
+        <n-form-item class="flex items-center justify-center p-4">
           <n-button 
-            class="p-2 text-base font-bold"
+            class="p-3 text-base font-bold"
             round
             ghost
             type="primary"
-            @click="handleValidateButtonClick"
+            @click="handleValidateClick"
             >
             <template #icon>
-              <n-icon size="23">
+              <n-icon size="24">
                 <Fingerprint24Regular />
               </n-icon>
             </template>
-             Log in
+             log in
           </n-button>
         </n-form-item>
       </n-form>
@@ -50,7 +53,7 @@
 import * as THREE from "three";
 import WAVES from "vanta/src/vanta.waves";
 import { Code24Filled, Fingerprint24Regular } from '@vicons/fluent';
-import { NIcon, NButton, FormInst, FormItemInst, FormItemRule, FormRules, useMessage } from 'naive-ui';
+import { NIcon, NButton, FormInst, useMessage, NForm, NFormItem, NInput } from 'naive-ui';
 import { onMounted, onBeforeUnmount, ref } from "vue";
 
 // 使用ref引用挂载区域
@@ -84,45 +87,37 @@ onBeforeUnmount(() => {
 });
 
 // 表单内容
-interface ModelType {
-  account: string | null
-  password: string | null
-};
 
-const formRef = ref<FormInst | null>(null);
+
+const formRef = ref<FormInst | null>();
 const message = useMessage();
-const model = ref<ModelType>({
-  account: null,
-  password: null
+const model = ref({
+  user: {
+    account: null,
+    password: null
+  }
 });
-const rules: FormRules = {
-  account: [
-    {
+
+const rules = {
+  user: {
+    account: {
       required: true,
-      validator(rule: FormItemRule, value: string) {
-        if (!value) {
-          return new Error('请填写账号')
-        }
-        return true
-      },
-      trigger: ['input', 'blur']
-    }
-  ],
-  password: [
-    {
+      trigger: ['input', 'blur'],
+    },
+    password: {
       required: true,
       message: '请输入密码'
     }
-  ]
+  }
 };
-function handleValidateButtonClick(e: MouseEvent) {
-  e.preventDefault()
+function handleValidateClick(e: MouseEvent) {
+  e.preventDefault();
   formRef.value?.validate((errors) => {
     if(!errors) {
-      message.success('验证成功')
+      message.success('登录成功')
     } else {
       console.log(errors)
-      message.error('验证失败')
+      message.error('登录失败')
     }
   })
 }
