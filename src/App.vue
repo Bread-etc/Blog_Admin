@@ -14,4 +14,9 @@ html, body {
   margin: 0;
 }
 
+@font-face {
+  font-family: 'LXGW WenKai';
+  src: url('@fonts/LXGWWenKaiGBScreen.ttf') format('truetype');
+}
+
 </style>
