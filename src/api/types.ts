@@ -4,3 +4,12 @@ export type Result<T> = {
   message: string;
   data: T;
 };
+
+// 登录参数
+export type Login = {
+  user: {
+    account: string;
+    password: string;
+  }
+};
+

@@ -131,8 +131,7 @@ function handleLogin(event: MouseEvent) {
 
       // 执行发送axios请求
       authStore.login();
-
-      console.log(model.value)
+      console.log(model);
       message.success("登录成功");
     } else {
       console.log(errors);
