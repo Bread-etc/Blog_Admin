@@ -37,7 +37,7 @@ export default {
         var jsencrypt = new JSEncrypt();
         jsencrypt.setPrivateKey(privateKey);
         // 如果是对象/数组,需要先试用JSON.stringify转换为字符串
-        var result = jsencrypt.encrypt(data);
+        var result = jsencrypt.decrypt(data);
         return result;
     },
     // 加密

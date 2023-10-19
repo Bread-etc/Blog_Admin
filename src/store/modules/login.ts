@@ -1,7 +1,5 @@
-// 用于管理登录状态
+// 用于管理登录状态 (存入到localStorage中)
 import { defineStore } from "pinia";
-import { getUserAuth } from "../../api/Admin/userAuth";
-
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
@@ -9,8 +7,6 @@ export const useAuthStore = defineStore('auth', {
         isLogin: false,
         // 是否授权通过
         authState: false,
-        // 保存公钥
-        publicKey: '',
     }),
     actions: {
         // 登录
@@ -21,10 +17,6 @@ export const useAuthStore = defineStore('auth', {
         // 登出
         logout() {
             this.isLogin = false;
-        },
-        async fetchUserAuth(query: Object) {
-            const response = await getUserAuth(query);
-            console.log(response);
         },
     }
 })
