@@ -60,7 +60,7 @@
 <script lang="ts" setup>
 import * as THREE from "three";
 import CLOUDS from "vanta/src/vanta.clouds";
-import rsa from '../utils/rsa';
+import {encryptedData, decryptedData} from '../utils/crypto';
 import { useAuthStore } from "../store/modules/login";
 import { getUserAuth } from "../api/Admin/userAuth";
 import { Code24Filled, Fingerprint24Regular } from "@vicons/fluent";
@@ -125,7 +125,7 @@ const rules = {
 // 登录请求
 const authStore = useAuthStore();
 
-
+console.log("密码:",encryptedData(model.value.user.password));
 
 function handleLogin(event: MouseEvent) {
   event.preventDefault();
@@ -133,22 +133,20 @@ function handleLogin(event: MouseEvent) {
     if (!errors) {
       try {
         // 先使用RSA进行加密
-        const encryptedPassword = rsa.rsaPublicData(model.value.user.password);
+        const encryptedPassword = encryptedData(model.value.user.password);
         // 执行axios发送请求
         const response = await getUserAuth({
           account: model.value.user.account,
           password: encryptedPassword,
         });
-
+        console.log(response);
         // 处理响应
         if(response) {
           authStore.login();
           message.success("登录成功");
-          console.log(response)
         } else {
           console.log(errors);
           message.error("登录失败");
-          console.log(response)
         }
       } catch (error) {
         console.error(error);
@@ -159,7 +157,9 @@ function handleLogin(event: MouseEvent) {
       message.error("登录失败");
     }
   });
+
 }
 </script>
 
 <style lang="scss" module></style>
+../utils/sm4
