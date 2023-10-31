@@ -1,10 +1,9 @@
 import axios from "axios";
 import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
-
 // 创建axios实例
 const service: AxiosInstance = axios.create({
-    baseURL: 'http://localhost:8080',
-    timeout: 500,
+    baseURL: 'http://127.0.0.1:8080',
+    timeout: 5000,
 });
 
 // 请求拦截器
@@ -19,7 +18,7 @@ service.interceptors.request.use(
         return config;
     },
     (error: AxiosError) => {
-        alert(error.message);
+        // alert(error.message);
         return Promise.reject(error);
     }
 )
@@ -28,13 +27,11 @@ service.interceptors.request.use(
 service.interceptors.response.use(
     (response: AxiosResponse) => {
         const { code, message, data } = response.data;
-
         // 根据自定义错误码判断请求是否成功
         if (code === 200) {
             return data;
         } else {
             // 处理业务错误
-            alert(message);
             return Promise.reject(new Error(message));
         }
     },
@@ -79,7 +76,7 @@ service.interceptors.response.use(
                 message = `连接出错${status}!`;
         }
 
-        alert(message);
+        // alert(message);
         return Promise.reject(error);
     }
 );
@@ -90,7 +87,16 @@ export const http = {
         return service.get(url, config);
     },
 
-    post<T=any>(url: string, data?: object, config?: AxiosRequestConfig) : Promise<T> {
+    post<T=any>(url: string, data?: object | FormData, config?: AxiosRequestConfig) : Promise<T> {
+        if (data instanceof FormData) {
+            config = {
+                ...config,
+                headers: {
+                    ...config?.headers,
+                    'Content-Type': 'multipart/form-data',
+                }
+            };
+        }
         return service.post(url, data, config);
     },
 

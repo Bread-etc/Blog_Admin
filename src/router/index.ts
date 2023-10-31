@@ -4,6 +4,11 @@ import Home from '../views/Home.vue';
 
 const routes: Array<RouteRecordRaw> = [
     {
+        path: '/',
+        name: 'Index',
+        redirect: '/login'
+    },
+    {
         path: '/login',
         name: 'Login',
         meta: {
@@ -14,11 +19,14 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/home',
         name: 'Home',
+        alias: '/admin',
         meta: {
-            title: '管理'
+            title: '管理',
+            // 需要鉴权
+            requiresAuth: true,
         },
         component: Home
-    }
+    },
 ];
 
 // 定义路由器
@@ -28,13 +36,18 @@ const router = createRouter({
     routes,
 });
 
-// 注册全局前置守卫
-// router.beforeEach((to, from, next) => {
-//     // if(isLogin) {
-//     //     next()
-//     // } else {
-//     //     next({ name: 'Home' })
-//     // }
-// });
+// 全局路由守卫
+router.beforeEach((to, _from, next) => {
+    const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+    const isLoginString = sessionStorage.getItem("isLogin");
+    const isLogin = isLoginString !== null ? JSON.parse(isLoginString) : false;
+
+    if (requiresAuth && !isLogin) {
+        // 需要登录但用户未登录
+        next('/login');
+    } else {
+        next();
+    }
+})
 
 export default router;

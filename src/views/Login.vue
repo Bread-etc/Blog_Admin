@@ -12,7 +12,7 @@
       </n-icon>
       <h2 class="m-0 p-2 text-2xl text-center">Sign in</h2>
       <div class="text-base underline truncate font-semibold">
-        Login to start your editing!
+        Login to start editing!
       </div>
       <n-form
         class="p-4 text-base font-sans items-center flex justify-center flex-col"
@@ -25,7 +25,7 @@
         :show-require-mark="false"
       >
         <n-form-item label="账号" path="user.account" class="p-1 w-3/4">
-          <n-input v-model:value="model.user.account" placeholder="" />
+          <n-input v-model:value="model.user.username" placeholder="" />
         </n-form-item>
         <n-form-item label="密码" path="user.password" class="p-1 w-3/4">
           <n-input
@@ -60,9 +60,11 @@
 <script lang="ts" setup>
 import * as THREE from "three";
 import CLOUDS from "vanta/src/vanta.clouds";
-import {encryptedData, decryptedData} from '../utils/crypto';
-import { useAuthStore } from "../store/modules/login";
-import { getUserAuth } from "../api/Admin/userAuth";
+import { encrypt } from '../utils/crypt';
+import { useAuthStore } from "../store/modules/auth";
+import { getPublicKey } from '../api/Admin/getPublicKey';
+import { Login } from "../api/Admin/login";
+import { useRouter } from "vue-router";
 import { Code24Filled, Fingerprint24Regular } from "@vicons/fluent";
 import {
   NIcon,
@@ -75,9 +77,47 @@ import {
 } from "naive-ui";
 import { onMounted, onBeforeUnmount, ref } from "vue";
 
+// 路由管理
+const router = useRouter();
+// 状态管理
+const authStore = useAuthStore();
+// 表单内容
+const formRef = ref<FormInst | null>();
+const message = useMessage();
+const model = ref({
+  user: {
+    username: '',
+    password: '',
+  },
+});
+
+const rules = {
+  user: {
+    username: {
+      required: true,
+      trigger: ["input", "blur"],
+    },
+    password: {
+      required: true,
+      message: "请输入密码",
+    },
+  },
+};
+
 // 使用ref引用挂载区域
 const Area = ref(null);
 let vantaEffect: any = null;
+
+// 获取公钥
+async function getKey() {
+  try {
+    const publicKey: string = await getPublicKey();
+    return publicKey;
+  } catch (error) {
+    throw error;
+  }
+}
+
 
 // 在两个生命周期钩子内创建vantaEffect
 onMounted(() => {
@@ -90,6 +130,8 @@ onMounted(() => {
     minHeight: 200.00,
     minWidth: 200.00
   });
+  // 初始化
+  authStore.initAuth();
 });
 
 onBeforeUnmount(() => {
@@ -98,54 +140,27 @@ onBeforeUnmount(() => {
   }
 });
 
-// 表单内容
-const formRef = ref<FormInst | null>();
-const message = useMessage();
-const model = ref({
-  user: {
-    account: null,
-    password: null,
-  },
-});
-
-
-const rules = {
-  user: {
-    account: {
-      required: true,
-      trigger: ["input", "blur"],
-    },
-    password: {
-      required: true,
-      message: "请输入密码",
-    },
-  },
-};
 
 // 登录请求
-const authStore = useAuthStore();
-
-console.log("密码:",encryptedData(model.value.user.password));
 
 function handleLogin(event: MouseEvent) {
   event.preventDefault();
   formRef.value?.validate(async (errors) => {
     if (!errors) {
       try {
+        // 获取公钥
+        const publicKey = await getKey();
         // 先使用RSA进行加密
-        const encryptedPassword = encryptedData(model.value.user.password);
+        const encryptedPassword = encrypt(model.value.user.password, publicKey);
         // 执行axios发送请求
-        const response = await getUserAuth({
-          account: model.value.user.account,
-          password: encryptedPassword,
-        });
-        console.log(response);
+        const response = await Login(model.value.user.username, encryptedPassword);
+        console.log("Response:", response);
         // 处理响应
         if(response) {
-          authStore.login();
           message.success("登录成功");
+          authStore.login();
+          router.push({ path: '/home'});
         } else {
-          console.log(errors);
           message.error("登录失败");
         }
       } catch (error) {
@@ -157,9 +172,7 @@ function handleLogin(event: MouseEvent) {
       message.error("登录失败");
     }
   });
-
 }
 </script>
 
 <style lang="scss" module></style>
-../utils/sm4

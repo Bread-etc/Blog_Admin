@@ -5,23 +5,15 @@ export type Result<T> = {
   data: T;
 };
 
-// // 用户信息
-// export interface UserInfo {
-
-// };
-
 // 登录参数
 export interface Login {
   code: number;
   message: string;
   data: {
     user: {
-      account: string;
-      password: string;
+      username: string;
+      encryptedPassword: string;
     }
-  };
-  headers: {
-    'Content-Type': 'application/x-www-form-urlencoded'
   };
 };
 
