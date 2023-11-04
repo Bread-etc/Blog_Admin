@@ -7,6 +7,7 @@ export default {
   plugins: [],
   corePlugins: {
     preflight: false,
-  }
+  },
+  darkMode: 'class',
 }
 

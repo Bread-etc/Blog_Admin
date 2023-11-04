@@ -154,11 +154,16 @@ function handleLogin(event: MouseEvent) {
         const encryptedPassword = encrypt(model.value.user.password, publicKey);
         // 执行axios发送请求
         const response = await Login(model.value.user.username, encryptedPassword);
-        console.log("Response:", response);
+        // console.log("Token:", response);
+
         // 处理响应
         if(response) {
           message.success("登录成功");
-          authStore.login();
+          /*
+           处理 token 和 isLogin
+            两个验证都通过才能登录
+          */ 
+          authStore.login(response.toString());
           router.push({ path: '/home'});
         } else {
           message.error("登录失败");

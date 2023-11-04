@@ -52,3 +52,6 @@
 - 完成状态管理`auth.ts`(利用sessionStorage管理)
 - 添加全局路由守卫`to,from,next`(缺省使用下划线)
 - 完成密码加密发送`login.ts`
+
+### 2023/11/4
+- 完成`login.vue`中token接收存入`localStorage`

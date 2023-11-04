@@ -3,27 +3,32 @@ import { defineStore } from "pinia";
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
-        // 是否授权 (初始为 false)
+        // 是否授权 (初始为 ''和 false)
+        token: '',
         authState: false
     }),
     actions: {
-        // 初始化 sessionStorage
+        // 初始化 localStorage 
         initAuth() {
-            const state = sessionStorage.getItem("isLogin");
+            const isLogin = localStorage.getItem("isLogin");
+            const token = localStorage.getItem("token");
             // 如果没有这个值就初始化
-            if (state === null) {
-                sessionStorage.setItem("isLogin", this.authState.toString());
+            if (token === null && isLogin === null) {
+                localStorage.setItem("token", this.token);
+                localStorage.setItem("isLogin", false.toString());
             }
         },
         // 登录
-        login() {
-            this.authState = true;
-            sessionStorage.setItem("isLogin", this.authState.toString());
+        login(newToken: string) {
+            this.token = newToken;
+            localStorage.setItem("token", this.token);
+            localStorage.setItem("isLogin", true.toString());
         },
         // 登出
         logout() {
-            this.authState = false;
-            sessionStorage.setItem("isLogin", this.authState.toString());
+            this.token = '';
+            localStorage.setItem("token", this.token);
+            localStorage.setItem("isLogin", false.toString());
         },
     }
 })
