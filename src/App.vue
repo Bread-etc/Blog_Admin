@@ -10,9 +10,6 @@ import { NMessageProvider } from 'naive-ui';
 </template>
 
 <style scoped lang="css">
-html, body {
-  margin: 0;
-}
 
 @font-face {
   font-family: 'LXGW WenKai';

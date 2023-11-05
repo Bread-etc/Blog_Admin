@@ -2,12 +2,21 @@
 export default {
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'dash-light': '#f1f4fb',
+        'content-light': '#ffffff',
+        'dash-dark': '#222131',
+        'content-dark': '#39394b',
+
+      }
+    },
   },
   plugins: [],
   corePlugins: {
     preflight: false,
   },
   darkMode: 'class',
+  
 }
 

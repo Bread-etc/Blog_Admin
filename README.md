@@ -55,3 +55,6 @@
 
 ### 2023/11/4
 - 完成`login.vue`中token接收存入`localStorage`
+
+### 2023/11/5
+- 开始`/home`页面制作
