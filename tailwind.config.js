@@ -8,6 +8,7 @@ export default {
         'content-light': '#ffffff',
         'dash-dark': '#222131',
         'content-dark': '#39394b',
+        'normal-font': ''
 
       }
     },

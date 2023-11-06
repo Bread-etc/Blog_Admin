@@ -3,10 +3,10 @@
   <n-config-provider :theme="theme">
     <div class="h-screen w-screen flex font-mono box-content" style="font-family: LXGW WenKai">
         <div class="flex flex-col items-center w-40 bg-content-light p-2">
-            侧边栏
+            <p class="p-5 m-0 font-extrabold text-lg">侧边栏</p>
             <SideList></SideList>
         </div>
-        <div class="flex flex-col items-center flex-auto bg-dash-light p-2">
+        <div class="flex flex-col items-center flex-auto bg-dash-light p-2 font-semibold font-sans">
             DashBoard
         </div>
       <!-- <n-card>
