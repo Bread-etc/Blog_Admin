@@ -8,7 +8,9 @@ export default {
         'content-light': '#ffffff',
         'dash-dark': '#222131',
         'content-dark': '#39394b',
-        'normal-font': ''
+        'side-block': '#483ffd',
+        'side-icon': '#7f79fe',
+        
 
       }
     },

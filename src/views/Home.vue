@@ -2,8 +2,19 @@
 <template>
   <n-config-provider :theme="theme">
     <div class="h-screen w-screen flex font-mono box-content" style="font-family: LXGW WenKai">
-        <div class="flex flex-col items-center w-40 bg-content-light p-2">
-            <p class="p-5 m-0 font-extrabold text-lg">侧边栏</p>
+      <!-- 左侧side -->
+        <div class="flex flex-col items-center w-40 bg-content-light p-2 text-slate-100">
+            <img src="../assets/images/head_pic.jpg" class="rounded-full object-left-bottom h-14 w-14 my-4" alt="/logo/work">
+            <div class="my-2 flex content-center justify-center items-center justify-items-center rounded-lg">
+              <div class="flex content-center justify-items-center p-2 bg-side-icon rounded-l-lg drop-shadow-2xl">
+                <n-icon size="20px">
+                  <ClipboardTaskListRtl24Filled />
+                </n-icon>
+              </div>
+              <div class="p-1 font-semibold text-base bg-side-block rounded-tr-lg rounded-br-lg rounded-r-lg drop-shadow-2xl"> 
+                <p class="m-0 px-2" style="font-size: 13px;">Dashboard</p>
+              </div>
+            </div>
             <SideList></SideList>
         </div>
         <div class="flex flex-col items-center flex-auto bg-dash-light p-2 font-semibold font-sans">
@@ -28,8 +39,9 @@
 </template>
 
 <script lang="ts" setup>
+import { ClipboardTaskListRtl24Filled } from '@vicons/fluent';
 import SideList from "./components/SideList.vue";
-import { NConfigProvider, GlobalTheme } from "naive-ui";
+import { NConfigProvider, GlobalTheme, NIcon } from "naive-ui";
 import { ref } from "vue";
 
 const theme = ref<GlobalTheme | null>(null);  
