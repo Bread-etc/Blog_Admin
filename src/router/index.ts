@@ -1,6 +1,11 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Login from "../views/Login.vue";
 import Home from "../views/Home.vue";
+import Publish from "../views/components/Publish.vue";
+import Manage from "../views/components/Manage.vue";
+import Message from "../views/components/Message.vue";
+import Analytics from "../views/components/Analytics.vue";
+import Settings from "../views/components/Settings.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -25,6 +30,46 @@ const routes: Array<RouteRecordRaw> = [
     },
     component: Home,
   },
+  {
+    path: "/publish",
+    name: "Publish",
+    meta: {
+      title: "发布"
+    },
+    component: Publish,
+  },
+  {
+    path: "/manage",
+    name: "Manage",
+    meta: {
+      title: "管理"
+    },
+    component: Manage
+  },
+  {
+    path: "/message",
+    name: "Message",
+    meta: {
+      title: "消息"
+    },
+    component: Message
+  },
+  {
+    path: "/analytics",
+    name: "Analytics",
+    meta: {
+      title: "分析"
+    },
+    component: Analytics
+  },
+  {
+    path: "/settings",
+    name: "Settings",
+    meta: {
+      title: "设置"
+    },
+    component: Settings
+  }
 ];
 
 // 定义路由器

@@ -11,7 +11,7 @@
         <Code24Filled />
       </n-icon>
       <h2 class="m-0 p-2 text-2xl text-center">Sign in</h2>
-      <div class="text-base underline truncate font-semibold">
+      <div class="text-base underline truncate font-semibold sm:w-full w-2/3 text-center">
         Login to start editing!
       </div>
       <n-form
