@@ -1,7 +1,7 @@
 <!-- Public.vue for home.vue -->
 <template>
     <div>
-
+        发布
     </div>
 </template>
 

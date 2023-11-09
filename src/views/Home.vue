@@ -11,29 +11,15 @@
                   <ClipboardTaskListRtl24Filled />
                 </n-icon>
               </div>
-              <div class="p-1 font-semibold text-base bg-side-block rounded-tr-lg rounded-br-lg rounded-r-lg drop-shadow-2xl"> 
-                <p class="m-0 px-2" style="font-size: 13px;">Dashboard</p>
+              <div class="p-1 px-2 font-mono font-semibold text-base bg-side-block rounded-tr-lg rounded-br-lg rounded-r-lg drop-shadow-2xl" style="font-size: 14px; "> 
+                DashBoard
               </div>
             </div>
             <SideList></SideList>
         </div>
         <div class="flex flex-col items-center flex-auto bg-dash-light p-2 font-semibold font-sans">
-            DashBoard
+            <router-view></router-view>
         </div>
-      <!-- <n-card>
-        <n-space>
-          <n-button @click="theme = lightTheme">
-            浅色
-          </n-button>
-        </n-space>
-      </n-card>
-      <n-card>
-        <n-space>
-            <n-button @click="theme = darkTheme">
-                深色
-            </n-button>
-        </n-space>
-      </n-card> -->
     </div>
   </n-config-provider>
 </template>
@@ -42,9 +28,12 @@
 import { ClipboardTaskListRtl24Filled } from '@vicons/fluent';
 import SideList from "./components/SideList.vue";
 import { NConfigProvider, GlobalTheme, NIcon } from "naive-ui";
+import { useRouter } from "vue-router";
 import { ref } from "vue";
 
-const theme = ref<GlobalTheme | null>(null);  
+const theme = ref<GlobalTheme | null>(null);
+const router = useRouter();
+
 </script>
 
 <style lang="scss" module></style>

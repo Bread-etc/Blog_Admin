@@ -2,7 +2,7 @@
 <template>
   <div>
     <ul class="flex flex-col m-0 p-0">
-      <li v-for="item in guideList" class="list-none p-3 text-gray-400 flex flex-row justify-item-center items-center text-base font-bold cursor-pointer" @click="directTo">
+      <li v-for="item in guideList" class="list-none p-3 text-gray-400 flex flex-row justify-item-center items-center text-base font-bold cursor-pointer hover:text-gray-600 outline-dashed" id="item-li"  @click="directTo(item.url)">
         <n-icon v-html="item.icon" size="24px" depth="2" class="mr-1.5 flex" style="margin-top: 6px;"></n-icon>
         {{ item.name }}
       </li>
@@ -44,9 +44,14 @@ const guideList = [
 
 // 路由跳转
 const router = useRouter();
-function directTo() {
-  router.push('');
+function directTo(url: string) {
+  router.push(url);
 };
 </script>
 
-<style lang="scss" module></style>
+<style lang="css" module>
+#item-li:hover {
+  border-bottom: #483ffd;
+  font-size: 14px;
+}
+</style>
