@@ -50,8 +50,5 @@ function directTo(url: string) {
 </script>
 
 <style lang="css" module>
-#item-li:hover {
-  border-bottom: #483ffd;
-  font-size: 14px;
-}
+
 </style>
