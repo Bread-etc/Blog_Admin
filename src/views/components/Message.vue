@@ -1,7 +1,7 @@
 <!-- Message.vue for home.vue -->
 <template>
     <div>
-
+        xx
     </div>
 </template>
 

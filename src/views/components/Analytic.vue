@@ -1,7 +1,7 @@
-<!-- Analytics.vue for home.vue -->
+<!-- Analytic.vue for home.vue -->
 <template>
     <div>
-
+        fen xi
     </div>
 </template>
 

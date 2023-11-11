@@ -4,7 +4,7 @@ import Home from "../views/Home.vue";
 import Publish from "../views/components/Publish.vue";
 import Manage from "../views/components/Manage.vue";
 import Message from "../views/components/Message.vue";
-import Analytics from "../views/components/Analytics.vue";
+import Analytic from "../views/components/Analytic.vue";
 import Settings from "../views/components/Settings.vue";
 
 const routes: Array<RouteRecordRaw> = [
@@ -34,7 +34,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/publish",
     name: "Publish",
     meta: {
-      title: "发布"
+      title: "发布",
     },
     component: Publish,
   },
@@ -42,34 +42,34 @@ const routes: Array<RouteRecordRaw> = [
     path: "/manage",
     name: "Manage",
     meta: {
-      title: "管理"
+      title: "管理",
     },
-    component: Manage
+    component: Manage,
   },
   {
     path: "/message",
     name: "Message",
     meta: {
-      title: "消息"
+      title: "消息",
     },
-    component: Message
+    component: Message,
   },
   {
-    path: "/analytics",
-    name: "Analytics",
+    path: "/analytic",
+    name: "Analytic",
     meta: {
-      title: "分析"
+      title: "分析",
     },
-    component: Analytics
+    component: Analytic,
   },
   {
     path: "/settings",
     name: "Settings",
     meta: {
-      title: "设置"
+      title: "设置",
     },
-    component: Settings
-  }
+    component: Settings,
+  },
 ];
 
 // 定义路由器
