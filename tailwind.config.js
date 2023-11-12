@@ -12,6 +12,10 @@ export default {
         'side-icon': '#7f79fe',
         
 
+      },
+      width: {
+        '.15': '15%',
+        '.85': '85%'
       }
     },
   },

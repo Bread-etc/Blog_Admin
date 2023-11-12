@@ -1,15 +1,10 @@
 <!-- Manage.vue for home.vue -->
 <template>
-    <div>
-
-        man
-    </div>
+  <div class="flex flex-col justify-center">
+    <h1>管理</h1>
+  </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup></script>
 
-</script>
-
-<style lang="scss" module>
-
-</style>
+<style lang="scss" module></style>

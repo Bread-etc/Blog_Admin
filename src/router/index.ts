@@ -25,50 +25,53 @@ const routes: Array<RouteRecordRaw> = [
     path: "/home",
     name: "Home",
     alias: "/admin",
+    redirect: "/home/manage",
     meta: {
       title: "管理",
     },
     component: Home,
-  },
-  {
-    path: "/publish",
-    name: "Publish",
-    meta: {
-      title: "发布",
-    },
-    component: Publish,
-  },
-  {
-    path: "/manage",
-    name: "Manage",
-    meta: {
-      title: "管理",
-    },
-    component: Manage,
-  },
-  {
-    path: "/message",
-    name: "Message",
-    meta: {
-      title: "消息",
-    },
-    component: Message,
-  },
-  {
-    path: "/analytic",
-    name: "Analytic",
-    meta: {
-      title: "分析",
-    },
-    component: Analytic,
-  },
-  {
-    path: "/settings",
-    name: "Settings",
-    meta: {
-      title: "设置",
-    },
-    component: Settings,
+    children: [
+      {
+        path: "/home/publish",
+        name: "Publish",
+        meta: {
+          title: "发布",
+        },
+        component: Publish,
+      },
+      {
+        path: "/home/manage",
+        name: "Manage",
+        meta: {
+          title: "管理",
+        },
+        component: Manage,
+      },
+      {
+        path: "/home/message",
+        name: "Message",
+        meta: {
+          title: "消息",
+        },
+        component: Message,
+      },
+      {
+        path: "/home/analytic",
+        name: "Analytic",
+        meta: {
+          title: "分析",
+        },
+        component: Analytic,
+      },
+      {
+        path: "/home/settings",
+        name: "Settings",
+        meta: {
+          title: "设置",
+        },
+        component: Settings,
+      },
+    ],
   },
 ];
 
