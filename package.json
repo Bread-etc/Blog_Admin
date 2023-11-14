@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "axios": "^1.5.1",
+    "echarts": "^5.4.3",
     "encryptlong": "^3.1.4",
     "jsencrypt": "^3.3.2",
     "pinia": "^2.1.6",
