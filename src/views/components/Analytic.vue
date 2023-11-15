@@ -64,59 +64,33 @@
       </div>
     </div>
     <div class="flex flex-row w-full">
-      <div class="w-1/2 p-5 mx-2 my-3 bg-white rounded-lg h-full" ref="chart"></div>
-      <div class="w-1/2 p-5 mx-2 my-3 bg-white rounded-lg h-full">456456</div>
+      <div class="w-3/4 p-5 mx-2 my-3 bg-white rounded-lg h-full shadow-xl flex flex-col justify-items-center items-center">
+        <p class="px-3 m-0 text-base self-start cursor-default">Total visits</p>
+        <Dataviewer class="-mb-20 -mt-4"/>
+      </div>
+      <div class="w-1/4 p-5 mx-2 my-3 bg-white rounded-lg h-full shadow-xl">
+        <DataArticle class="-mb-20 -mt-4" />
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import * as echarts from "echarts";
 import {
   DrawImage24Filled,
   Heart24Filled,
   ChartMultiple24Filled,
   ApprovalsApp24Filled,
 } from "@vicons/fluent";
-import { ref, onMounted } from "vue";
+import Dataviewer from "./DataViewer.vue";
+import DataArticle from "./DataArticle.vue";
+import { ref } from "vue";
 
 const article = ref(5);
 const comments = ref(2);
 const viewers = ref(10);
 const runTime = ref("356");
 
-const chart = ref();
-
-const init = () => {
-  const myChart = echarts.init(chart.value);
-
-  let option = {
-    title: {
-      text: 'ECharts 入门示例'
-    },
-    tooltip: {},
-    legend: {
-      data: ['销量']
-    },
-    xAxis: {
-      data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
-    },
-    yAxis: {},
-    series: [
-      {
-        name: '销量',
-        type: 'bar',
-        data: [5, 20, 36, 10, 10, 20]
-      }
-    ]
-  };
-
-  myChart.setOption(option);
-}
-
-onMounted(() => {
-  init();
-})
 
 </script>
 
