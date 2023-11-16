@@ -43,6 +43,8 @@ const init = () => {
           },
           label: {
             show: true,
+            fontSize: 18,
+            fontWeight: 'bold'
           },
         },
       },

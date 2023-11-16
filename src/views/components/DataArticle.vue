@@ -12,6 +12,38 @@ function init(){
   const data = charts.init(chart.value, null, {
     height: 300,
   });
+
+  let option = {
+    series: [
+      {
+        type: 'pie',
+        radius: ['40%', '70%'],
+        avoidLabelOverlap: false,
+        label: {
+          show: false,
+          position: 'center'
+        },
+        labelLine: {
+          show: false
+        },
+        emphasis: {
+          label: {
+            show: true,
+            fontSize: '30',
+            fontWeight: 'bold',
+          }
+        },
+        data: [
+          { value: 20, name: '学习'},
+          { value: 10, name: '生活'},
+          { value: 12, name: '资源'},
+          { value: 22, name: '随笔'}
+        ]
+      }
+    ]
+  };
+
+  data.setOption(option);
 };
 
 onMounted(() => {

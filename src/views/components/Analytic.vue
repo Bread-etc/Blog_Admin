@@ -69,6 +69,7 @@
         <Dataviewer class="-mb-20 -mt-4"/>
       </div>
       <div class="w-1/4 p-5 mx-2 my-3 bg-white rounded-lg h-full shadow-xl">
+        <p class="px-3 m-0 text-base self-start cursor-default">Article Num</p>
         <DataArticle class="-mb-20 -mt-4" />
       </div>
     </div>

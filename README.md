@@ -90,3 +90,7 @@
 
 ### 2023/11/15
 - 加入`平滑曲线图`
+- 加入`DataViewer` 和 `DataArticle`
+
+### 2023/11/16
+- 修改`DataArticle`
