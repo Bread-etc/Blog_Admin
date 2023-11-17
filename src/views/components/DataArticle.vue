@@ -38,7 +38,7 @@ function init(){
           { value: 10, name: '生活'},
           { value: 12, name: '资源'},
           { value: 22, name: '随笔'}
-        ]
+        ],
       }
     ]
   };

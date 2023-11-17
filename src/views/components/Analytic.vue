@@ -4,10 +4,10 @@
     class="flex flex-col items-start w-full"
     style="font-family: LXGW WenKai"
   >
-    <div class="font-extrabold text-lg p-5 m-0">Analytic</div>
+    <div class="font-extrabold text-lg p-5 m-0">Data Analytic</div>
     <div class="flex flex-row flex-nowarp justify-between w-full">
       <div
-        class="p-5 mx-2 w-1/4 bg-white rounded-lg flex flex-row items-center justify-items-center"
+        class="p-5 mx-2 w-1/4 bg-white rounded-lg flex flex-row items-center justify-items-center shadow-md"
       >
         <div
           class="flex justify-center items-center p-3 rounded-full"
@@ -21,7 +21,7 @@
         </div>
       </div>
       <div
-        class="p-5 mx-2 w-1/4 bg-white rounded-lg flex flex-row items-center"
+        class="p-5 mx-2 w-1/4 bg-white rounded-lg flex flex-row items-center shadow-md"
       >
         <div
           class="flex justify-center items-center p-3 rounded-full"
@@ -35,7 +35,7 @@
         </div>
       </div>
       <div
-        class="p-5 mx-2 w-1/4 bg-white rounded-lg flex flex-row items-center"
+        class="p-5 mx-2 w-1/4 bg-white rounded-lg flex flex-row items-center shadow-md"
       >
         <div
           class="flex justify-center items-center p-3 rounded-full"
@@ -49,7 +49,7 @@
         </div>
       </div>
       <div
-        class="p-5 mx-2 w-1/4 bg-white rounded-lg flex flex-row items-center"
+        class="p-5 mx-2 w-1/4 bg-white rounded-lg flex flex-row items-center shadow-md"
       >
         <div
           class="flex justify-center items-center p-3 rounded-full"
