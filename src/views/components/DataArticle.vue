@@ -29,9 +29,12 @@ function init(){
         emphasis: {
           label: {
             show: true,
-            fontSize: '30',
+            fontSize: '20',
             fontWeight: 'bold',
-          }
+            // {b}代表标签名, {c}代表标签数据的值
+            formatter: '{b}' + '\t' + '{c}',
+          },
+
         },
         data: [
           { value: 20, name: '学习'},

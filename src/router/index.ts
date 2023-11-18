@@ -1,11 +1,9 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Login from "../views/Login.vue";
 import Home from "../views/Home.vue";
-import Publish from "../views/components/Publish.vue";
 import Manage from "../views/components/Manage.vue";
 import Message from "../views/components/Message.vue";
 import Analytic from "../views/components/Analytic.vue";
-import Settings from "../views/components/Settings.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -32,14 +30,6 @@ const routes: Array<RouteRecordRaw> = [
     component: Home,
     children: [
       {
-        path: "/home/publish",
-        name: "Publish",
-        meta: {
-          title: "发布",
-        },
-        component: Publish,
-      },
-      {
         path: "/home/manage",
         name: "Manage",
         meta: {
@@ -62,15 +52,7 @@ const routes: Array<RouteRecordRaw> = [
           title: "分析",
         },
         component: Analytic,
-      },
-      {
-        path: "/home/settings",
-        name: "Settings",
-        meta: {
-          title: "设置",
-        },
-        component: Settings,
-      },
+      }
     ],
   },
 ];

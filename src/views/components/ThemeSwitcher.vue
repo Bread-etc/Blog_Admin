@@ -1,7 +1,7 @@
 <!-- 主题切换组件 -->
 <template>
-  <div>
-    <n-switch v-model:value="active" size="medium">
+  <div class="m-auto">
+    <n-switch v-model:value="active" size="large" @change="toggleMode">
       <template #checked-icon>
         <n-icon :component="WeatherMoon16Filled" />
       </template>
@@ -18,6 +18,9 @@ import { WeatherSunny16Filled, WeatherMoon16Filled } from "@vicons/fluent";
 import { ref } from "vue";
 
 const active = ref(false);
+const toggleMode = () => {
+  document.documentElement.classList.toggle("dark", active.value);
+};
 </script>
 
 <style lang="css" module></style>
