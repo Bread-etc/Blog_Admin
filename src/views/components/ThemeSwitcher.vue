@@ -15,12 +15,22 @@
 <script lang="ts" setup>
 import { NSwitch, NIcon } from "naive-ui";
 import { WeatherSunny16Filled, WeatherMoon16Filled } from "@vicons/fluent";
-import { ref } from "vue";
+import { useThemeStore } from "../../store/modules/theme";
+import { ref, onMounted } from "vue";
 
-const active = ref(false);
+const themeStore = useThemeStore();
+const active = ref(themeStore.isDarkTheme);
+
 const toggleMode = () => {
-  document.documentElement.classList.toggle("dark", active.value);
+  themeStore.toggleTheme();
 };
+
+onMounted(() => {
+  // 初始化主题
+  themeStore.initTheme();
+  // 更新active.value 变量, 使其与当前主题状态保持同步
+  active.value = themeStore.isDarkTheme;
+})
 </script>
 
 <style lang="css" module></style>

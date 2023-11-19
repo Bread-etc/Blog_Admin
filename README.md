@@ -103,3 +103,7 @@
 - 增加全局暗黑模式
 - 增加深色模式按钮`ThemeSwitcher`
 - 修改`Echarts`中圆环`hover`显示数据
+
+### 2023/11/19
+- 完善`深色模式`,增加存储到`localStorage`
+- 增加`theme.ts`
