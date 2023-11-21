@@ -2,7 +2,6 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Login from "../views/Login.vue";
 import Home from "../views/Home.vue";
 import Manage from "../views/components/Manage.vue";
-import Message from "../views/components/Message.vue";
 import Analytic from "../views/components/Analytic.vue";
 
 const routes: Array<RouteRecordRaw> = [
@@ -36,14 +35,6 @@ const routes: Array<RouteRecordRaw> = [
           title: "管理",
         },
         component: Manage,
-      },
-      {
-        path: "/home/message",
-        name: "Message",
-        meta: {
-          title: "消息",
-        },
-        component: Message,
       },
       {
         path: "/home/analytic",
