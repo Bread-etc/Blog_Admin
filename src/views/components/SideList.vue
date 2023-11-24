@@ -1,22 +1,19 @@
 <!-- SideList for sideGuide -->
 <template>
-  <n-loading-bar-provider>
-    <div>
-      <ul class="flex flex-col m-0 p-0 mt-5">
-        <li v-for="item in guideList" class="list-none m-3 text-gray-400 flex flex-row justify-item-center items-center text-base font-bold cursor-pointer hover:text-gray-500 dark:hover:text-white" id="item-li"  @click="directTo(item.url)">
-          <n-icon v-html="item.icon" size="24px" depth="2" class="mr-1.5 flex dark:text-white" style="margin-top: 6px;"></n-icon>
-          {{ item.name }}
-        </li>
-      </ul>
-      <div class="flex flex-row m-0 p-0 mt-5 items-center justify-items-center">
-        <ThemeSwitcher />
-      </div>
+  <div>
+    <ul class="flex flex-col m-0 p-0 mt-5">
+      <li v-for="item in guideList" class="list-none m-3 text-gray-400 flex flex-row justify-item-center items-center text-base font-bold cursor-pointer hover:text-gray-500 dark:hover:text-white" id="item-li"  @click="directTo(item.url)">
+        <n-icon v-html="item.icon" size="24px" depth="2" class="mr-1.5 flex dark:text-white" style="margin-top: 6px;"></n-icon>
+        {{ item.name }}
+      </li>
+    </ul>
+    <div class="flex flex-row m-0 p-0 mt-5 items-center justify-items-center">
+      <ThemeSwitcher />
     </div>
-  </n-loading-bar-provider>
+  </div>
 </template>
 
 <script lang="ts" setup>
-import { NLoadingBarProvider } from 'naive-ui';
 import ThemeSwitcher from './ThemeSwitcher.vue';
 import { useRouter } from 'vue-router';
 import { NIcon } from 'naive-ui';
@@ -38,6 +35,9 @@ const router = useRouter();
 function directTo(url: string) {
   router.push(`/home${url}`);
 };
+
+
+
 </script>
 
 <style lang="css" scoped>
