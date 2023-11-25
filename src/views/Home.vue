@@ -31,7 +31,6 @@ import { ClipboardTaskListRtl24Filled } from '@vicons/fluent';
 import { NIcon } from 'naive-ui';
 import SideList from "./components/SideList.vue";
 
-
 </script>
 
 <style lang="css" module>

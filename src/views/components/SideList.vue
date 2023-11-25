@@ -16,8 +16,11 @@
 <script lang="ts" setup>
 import ThemeSwitcher from './ThemeSwitcher.vue';
 import { useRouter } from 'vue-router';
-import { NIcon } from 'naive-ui';
+import { NIcon, useLoadingBar } from 'naive-ui';
 
+
+// 定义加载条
+const loadingBar = useLoadingBar();
 const guideList = [
     {
       name: 'manage',
@@ -32,8 +35,10 @@ const guideList = [
 
 // 路由跳转
 const router = useRouter();
-function directTo(url: string) {
-  router.push(`/home${url}`);
+async function directTo(url: string) {
+  await loadingBar.start();
+  await router.push(`/home${url}`);
+  await loadingBar.finish();
 };
 
 

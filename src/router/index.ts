@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import { useLoadingBar } from "naive-ui";
 import Login from "../views/Login.vue";
 import Home from "../views/Home.vue";
 import Manage from "../views/components/Manage.vue";
@@ -50,8 +49,6 @@ const routes: Array<RouteRecordRaw> = [
   },
 ];
 
-// 定义加载条
-const loadingBar = useLoadingBar();
 
 // 定义路由器
 const router = createRouter({
@@ -70,14 +67,9 @@ router.beforeEach((to, _from, next) => {
     // 重定向至 /login
     next("/login");
   } else {
-    loadingBar.start();
     next();
   };
 });
 
-
-router.afterEach(() => {
-  loadingBar.finish();
-})
 
 export default router;
