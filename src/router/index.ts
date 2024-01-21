@@ -4,7 +4,6 @@ import Home from "../views/Home.vue";
 import Manage from "../views/components/Manage.vue";
 import Analytic from "../views/components/Analytic.vue";
 
-
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
@@ -35,7 +34,7 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           title: "管理",
         },
-        component: Manage,
+        component: Manage
       },
       {
         path: "/home/analytic",

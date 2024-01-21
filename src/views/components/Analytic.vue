@@ -83,6 +83,7 @@ import Dataviewer from "./DataViewer.vue";
 import DataArticle from "./DataArticle.vue";
 import { ref } from "vue";
 
+// 后续加入Axios获取
 const article = ref(5);
 const comments = ref(2);
 const viewers = ref(10);
