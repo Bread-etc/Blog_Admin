@@ -4,6 +4,8 @@
 </template>
 
 <script lang="ts" setup>
+// 引入api
+import { getTag } from "../../api/Analytic/getTag";
 import * as charts from "echarts";
 import { ref, onMounted } from "vue";
 
@@ -52,6 +54,10 @@ function init(){
 onMounted(() => {
     init();
 })
+
+function getTagAndNumber() {
+  getTag();
+}
 </script>
 
 <style lang="scss" module></style>

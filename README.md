@@ -140,3 +140,8 @@
 - 添加`Manage`页面的api接口
 - 修改`Article`类型
 - 修改模态框
+
+### 2024/2/12
+- 完成`Manage`模块及其api接口的制作
+- 添加 info 下的`getTag`接口
+- 修改`DateArticle`模块的部分内容

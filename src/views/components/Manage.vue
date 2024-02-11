@@ -11,17 +11,22 @@
     </div>
     <div class="w-full">
       <div class="m-2">
-        <n-button 
-          class="dark:text-white" 
-          type="success"
-          size="large"
-          strong
-          secondary
-          :bordered="true" 
-          :ghost="false"
+        <n-upload
+          action="http://localhost:8080/upload"
+          @finish="handleFinish"
         >
-         新增
-        </n-button>
+          <n-button 
+            class="dark:text-white" 
+            type="success"
+            size="large"
+            strong
+            secondary
+            :bordered="true" 
+            :ghost="false"
+            >
+           上传
+          </n-button>
+        </n-upload>
       </div>
       <div class="table-container mx-2">
         <n-config-provider :theme="currentTheme">
@@ -38,8 +43,8 @@
             preset="dialog"
             type="success"
             :show-icon="false"
-            positive-text="submit"
-            negative-text="cancel"
+            positive-text="保存"
+            negative-text="取消"
             @positive-click="submitCallback"
             @negative-click="cancelCallback"
           >
@@ -59,7 +64,15 @@
               >
               </n-input>
               <n-input
-                v-model:value="img"
+                  v-model:value="tag"
+                  type="text"
+                  placeholder="标签"
+                  :show-count="true"
+                  style="margin-bottom: 1rem;"
+              >
+              </n-input>
+              <n-input
+                v-model:value="image"
                 type="text"
                 placeholder="图片"
                 :show-count="true"
@@ -81,8 +94,8 @@
             preset="dialog"
             type="warning"
             content="确认删除?"
-            positive-text="delete"
-            negative-text="cancel"
+            positive-text="确定"
+            negative-text="取消"
             @positive-click="submitDelete"
             @negative-click="cancelDelete"
           >
@@ -103,19 +116,21 @@ import {
   NConfigProvider,
   NCard,
   NModal,
-  NInput
+  NInput,
+  useMessage,
+  NUpload,
 } from "naive-ui";
 import type { DataTableColumn } from "naive-ui";
+import type { article } from "../../api/types";
 // Axios 通信
-import { reviseInfo } from "../../api/Info/reviseInfo";
 import { getData } from "../../api/Info/getData";
-import { h, ref, onMounted } from "vue";
-
-const currentTheme =
-  localStorage.getItem("theme") === "dark" ? darkTheme : lightTheme;
+import { reviseInfo } from "../../api/Info/reviseInfo";
+import { deleteInfo } from "../../api/Info/deleteInfo";
+import { h, ref, reactive, onMounted } from "vue";
+import { RowData } from "naive-ui/es/data-table/src/interface";
 
 // 表头数据
-const createColumns = ref<DataTableColumn<Article>[]>([
+const createColumns = ref<DataTableColumn<article>[]>([
   {
     title: "No",
     key: "id",
@@ -132,7 +147,7 @@ const createColumns = ref<DataTableColumn<Article>[]>([
     align: 'center',
     width: '50px',
     // 渲染render
-    render(row: Article) {
+    render(row: article) {
         return h(
           NTag,
           {
@@ -148,10 +163,10 @@ const createColumns = ref<DataTableColumn<Article>[]>([
   {
     title: "操作",
     key: "actions",
-    width: '300px',
+    width: '200px',
     align: 'center',
     // 添加按钮时必须有模板组件,将按钮信息以参数形式传到组件中,在组件中写相关样式
-    render(record: Article) {
+    render(item: article) {
       return [
         h(
           NButton,
@@ -161,21 +176,9 @@ const createColumns = ref<DataTableColumn<Article>[]>([
             size: "small",
             style: { marginRight: "10px" },
             // 修改
-            onClick: () => reviseData(record),
+            onClick: () => reviseData(item),
           },
           { default: () => "修改" }
-        ),
-        h(
-          NButton,
-          {
-            color: '#8ac379',
-            ghost: false,
-            size: 'small',
-            style: { marginRight: "10px" },
-            // 上传
-            onClick: () => uploadData(record),
-          },
-          { default: () => "上传"}
         ),
         h(
           NButton,
@@ -185,7 +188,7 @@ const createColumns = ref<DataTableColumn<Article>[]>([
             size: "small",
             style: { marginRight: "10px" },
             // 删除
-            onClick: () => deleteData(record),
+            onClick: () => deleteData(item),
           },
           { default: () => "删除" }
         ),
@@ -194,96 +197,143 @@ const createColumns = ref<DataTableColumn<Article>[]>([
   },
 ]);
 
-// 文章类型
-type Article = {
-  // No 
-  id: number;
-  // 文章简介 (可有可无)
-  content?: string;
-  // tag (标签)
-  tag: string;
-  // title (标题)
-  title: string;
-  // img (封面)
-  img?: string;
-};
-
-// 表格数据, 利用Axios获取
-const data: Article[] = [
-  {
-    id: 1,
-    title: "the first article",
-    tag: "生活",
-  },
-  {
-    id: 2,
-    title: "the second article",
-    tag: "学习",
-  },
-  {
-    id: 3,
-    title: "the third article",
-    tag: "学习",
-  },
-  {
-    id: 4,
-    title: "the third article",
-    tag: "学习",
-  },
-  {
-    id: 5,
-    title: "the third article",
-    tag: "学习",
-  },
-  {
-    id: 6,
-    title: "the third article",
-    tag: "学习",
-  }
-];
-
 // 模态框及文本框内容
 const showModal = ref(false);
 const showDelete = ref(false);
-const title = ref(null);
-const img = ref(null);
-const content = ref(null);
+const message = useMessage();
+let id = ref<number>(0);
+let content = ref<string | undefined>('');
+let tag = ref<string>('');
+let title = ref<string>('');
+let image = ref<string | undefined>('');
+let alias = ref<string>('');
 
-// dataTable 中button的方法
+
 // 修改
-function reviseData(record: Article) {
-  // 开启模态框
+function reviseData(item: article) {
   showModal.value = true;
-  // 如果没有做修改则直接清空
-  title.value = null;
-  img.value = null;
-  content.value = null;
+  // 初始化
+  if (item) {
+    id.value = item.id;
+    content.value = item.content;
+    tag.value = item.tag;
+    title.value = item.title;
+    image.value = item.image;
+    alias.value = item.alias;
+  } else {
+    message.error("无对象!");
+  }
 }
 
-function uploadData(record: Article) {
-  console.log("上传成功");
-  
+function submitCallback() {
+  const item: article = {
+    id: id.value,
+    content: content.value,
+    tag: tag.value,
+    title: title.value,
+    image: image.value,
+    alias: alias.value
+  }
+  // 执行修改信息
+  reviseInfo(item)
+    .then(() => {
+      message.success("已保存");
+      // 重新渲染数据
+      window.location.reload();
+    })
+    .catch((error) => {
+      // 处理错误
+      console.error("保存失败:", error);
+      message.error("保存失败: " + error.message); // 显示错误信息
+    });
 }
-
-function deleteData(record: Article) {
-  console.log("delete");
-  showDelete.value = true;
-}
-
-function submitCallback() {}
 
 function cancelCallback() {
   showModal.value = false;
+  message.warning("撤销保存!");
 }
 
-function submitDelete() {}
+// 删除
+function deleteData(item: article) {
+  showDelete.value = true;
+  // 初始化
+  if (item) {
+    id.value = item.id;
+    content.value = item.content;
+    tag.value = item.tag;
+    title.value = item.title;
+    image.value = item.image;
+    alias.value = item.alias;
+  } else {
+    message.error("无对象!");
+  }
+}
 
-function cancelDelete() {}
+function submitDelete() {
+  const deleteAlias: string = alias.value;
+  // 执行删除
+  deleteInfo(deleteAlias)
+  .then(() => {
+    message.success("已删除");
+    // 重新渲染数据 (会触发onMounted的内容)
+    window.location.reload();
+  })
+  .catch((error) => {
+    // 处理错误
+    console.error("删除失败:", error);
+    message.error("删除失败: " + error.message); // 显示错误信息
+  })
+}
 
+function cancelDelete() {
+  showDelete.value = false;
+  message.warning("撤销删除!");
+}
+
+
+// 渲染dataTable数据
+const data = ref<RowData[]>([]);
+async function showData(): Promise<article[]> {
+  try {
+    const data: article[] = await getData();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function fetchData() {
+  try {
+    const result = await showData();
+    data.value = result;
+  } catch (error) {
+    console.error("Failed to fetch data", error);
+  }
+}
+
+// 分页
+const pagination = reactive({
+  pageSize: 8,
+  pageSlot: 8,
+  showSizePicker: false,
+});
+
+
+// 上传完成回调
+function handleFinish() {
+  message.success("文件上传成功!");
+  // 上传后刷新页面
+  window.location.reload();
+}
+
+// 挂载获取数据data
 onMounted(() => {
-  // 开局渲染dataTable数据
-  getData();
+  fetchData();
 })
+
+// 当前主题
+const currentTheme = localStorage.getItem("theme") === "dark" ? darkTheme : lightTheme;
+
 </script>
 
 <style lang="css" module>

@@ -23,7 +23,7 @@ export interface Article {
   message: number;
   data: {
     article: {
-      // No 
+      // No
       id: number;
       // 文章简介
       content?: string;
@@ -31,8 +31,36 @@ export interface Article {
       tag: string;
       // title (标题)
       title: string;
-      // headPic (封面)
-      img: string;
-    }
-  }
+      // image (封面)
+      image?: string;
+      // time (发布时间)
+      time?: Date;
+    };
+  };
+}
+
+// 单个文章类型
+export interface article {
+  // No 
+  id: number;
+  // 文章简介 (可有可无)
+  content?: string;
+  // tag (标签)
+  tag: string;
+  // title (标题)
+  title: string;
+  // img (封面)
+  image?: string;
+  // alias (文件名)
+  alias: string;
+  // time (发布时间)
+  time?: Date;
+};
+
+// tag + number 类型
+export interface tagCircle {
+  // tag
+  tag: string;
+  // num
+  count: number;
 }
