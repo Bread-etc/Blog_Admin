@@ -9,8 +9,16 @@ import { getTag } from "../../api/Analytic/getTag";
 import * as charts from "echarts";
 import { ref, onMounted } from "vue";
 
+// 类型
+type tagNum = {
+  name: string,
+  value: number,
+}
+
 const chart = ref();
-function init(){
+
+// 初始化函数
+function init(tagData: tagNum[]){
   const data = charts.init(chart.value, null, {
     height: 300,
   });
@@ -36,14 +44,8 @@ function init(){
             // {b}代表标签名, {c}代表标签数据的值
             formatter: '{b}' + '\t' + '{c}',
           },
-
         },
-        data: [
-          { value: 20, name: '学习'},
-          { value: 10, name: '生活'},
-          { value: 12, name: '资源'},
-          { value: 22, name: '随笔'}
-        ],
+        data: tagData,
       }
     ]
   };
@@ -51,13 +53,31 @@ function init(){
   data.setOption(option);
 };
 
-onMounted(() => {
-    init();
-})
+// 获取标签信息
+async function getTagAndInit() {
+  try {
+    const data = await getTag();
+    const tagData: tagNum[] = [];
 
-function getTagAndNumber() {
-  getTag();
+    data.forEach((item) => {
+      const newItem = {
+        value: item.count,
+        name: item.tag
+      };
+      tagData.push(newItem);
+    });
+
+    init(tagData);
+
+  } catch (error) {
+    console.error("获取标签信息失败!", error);
+    // return [];  // 返回空数组或其他默认值
+  }
 }
+
+onMounted(() => {
+  getTagAndInit();
+})
 </script>
 
 <style lang="scss" module></style>

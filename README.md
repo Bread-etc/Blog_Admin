@@ -145,3 +145,7 @@
 - 完成`Manage`模块及其api接口的制作
 - 添加 info 下的`getTag`接口
 - 修改`DateArticle`模块的部分内容
+
+### 2024/2/14
+- 完成`getTag`与 echarts 的适配
+- 添加`getArticle`
