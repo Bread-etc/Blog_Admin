@@ -11,22 +11,64 @@
     </div>
     <div class="w-full">
       <div class="m-2">
-        <n-upload
-          action="http://localhost:8080/upload"
-          @finish="handleFinish"
-        >
+        <n-config-provider :theme="currentTheme" class="flex">
+          <n-upload
+            action="http://localhost:8080/upload"
+            @finish="handleFinish"
+            class="w-auto mr-2.5"
+          >
+            <n-button 
+              class="dark:text-white" 
+              type="success"
+              size="large"
+              strong
+              secondary
+              :bordered="true" 
+              :ghost="false"
+              >
+            上传
+            </n-button>
+          </n-upload>
           <n-button 
-            class="dark:text-white" 
-            type="success"
-            size="large"
-            strong
-            secondary
-            :bordered="true" 
-            :ghost="false"
+              class="dark:text-white" 
+              type="warning"
+              size="large"
+              strong
+              secondary
+              :bordered="true" 
+              :ghost="false"
+              @click="showSong = true"
+              >
+            切歌
+            <n-modal
+              v-model:show="showSong"
+              preset="dialog"
+              type="success"
+              :show-icon="false"
+              positive-text="保存"
+              negative-text="取消"
+              @positive-click="submitSong"
+              @negative-click="cancelSong"
             >
-           上传
+              <n-card
+                title="修改"
+                :bordered="false"
+                size="small"
+                role="dialog"
+                aria-modal="true"
+              >
+                <n-input
+                  v-model:value="songLink"
+                  type="textarea"
+                  placeholder="id(限网易云)"
+                  :show-count="true"
+                  style="margin-bottom: 1rem;"
+                >
+                </n-input>
+              </n-card>
+            </n-modal>
           </n-button>
-        </n-upload>
+          </n-config-provider>
       </div>
       <div class="table-container mx-2">
         <n-config-provider :theme="currentTheme">
@@ -126,6 +168,8 @@ import type { article } from "../../api/types";
 import { getData } from "../../api/Info/getData";
 import { reviseInfo } from "../../api/Info/reviseInfo";
 import { deleteInfo } from "../../api/Info/deleteInfo";
+import { getSongLink } from "../../api/Info/getSongLink";
+import { reviseSongLink } from "../../api/Info/reviseSongLink";
 import { h, ref, reactive, onMounted } from "vue";
 import { RowData } from "naive-ui/es/data-table/src/interface";
 
@@ -200,6 +244,7 @@ const createColumns = ref<DataTableColumn<article>[]>([
 // 模态框及文本框内容
 const showModal = ref(false);
 const showDelete = ref(false);
+const showSong = ref(false);
 const message = useMessage();
 let id = ref<number>(0);
 let content = ref<string | undefined>('');
@@ -207,6 +252,7 @@ let tag = ref<string>('');
 let title = ref<string>('');
 let image = ref<string | undefined>('');
 let alias = ref<string>('');
+let songLink = ref<string>('');
 
 
 // 修改
@@ -244,7 +290,7 @@ function submitCallback() {
     .catch((error) => {
       // 处理错误
       console.error("保存失败:", error);
-      message.error("保存失败: " + error.message); // 显示错误信息
+      message.error("保存失败: " + error.message);
     });
 }
 
@@ -290,6 +336,27 @@ function cancelDelete() {
   message.warning("撤销删除!");
 }
 
+// 切歌
+function submitSong() {
+  const newSong: string = songLink.value;
+
+  // 执行修改
+  reviseSongLink(newSong)
+  .then(() => {
+    message.success("已保存歌曲");
+    window.location.reload();
+  })
+  .catch((error) => {
+    // 处理错误
+    console.error("保存失败:", error);
+    message.error("保存失败: " + error.message);
+  })
+}
+
+function cancelSong() {
+  showSong.value = false;
+  message.warning("撤销切歌!");
+}
 
 // 渲染dataTable数据
 const data = ref<RowData[]>([]);
@@ -305,7 +372,9 @@ async function showData(): Promise<article[]> {
 async function fetchData() {
   try {
     const result = await showData();
+    const song = await getSongLink();
     data.value = result;
+    songLink.value = song;
   } catch (error) {
     console.error("Failed to fetch data", error);
   }
