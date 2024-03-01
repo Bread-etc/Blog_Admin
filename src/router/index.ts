@@ -21,7 +21,6 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/home",
     name: "Home",
-    alias: "/admin",
     redirect: "/home/manage",
     meta: {
       title: "管理",

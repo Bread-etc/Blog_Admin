@@ -1,9 +1,10 @@
 import axios from "axios";
 import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import { useMessage } from "naive-ui";
 // 创建axios实例
 const service: AxiosInstance = axios.create({
-    baseURL: 'http://127.0.0.1:8080',
-    timeout: 5000,
+  baseURL: "http://43.139.65.244:8088",
+  timeout: 2000,
 });
 
 // 请求拦截器
@@ -36,6 +37,7 @@ service.interceptors.response.use(
         }
     },
     (error: AxiosError) => {
+        const mess = useMessage();
         // 处理HTTP网络错误
         let message = '';
         // HTTP 状态码
@@ -77,6 +79,7 @@ service.interceptors.response.use(
         }
 
         // alert(message);
+        mess.warning(message);
         return Promise.reject(error);
     }
 );
