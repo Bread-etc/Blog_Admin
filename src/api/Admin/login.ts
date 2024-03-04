@@ -6,5 +6,5 @@ export function Login(username: string, encryptedPassword: any) {
     const formData = new FormData();
     formData.append('username', username);
     formData.append('encryptedPassword', encryptedPassword);
-    return http.post<Login>('/login', formData);
+    return http.post<Login>('/api/login', formData);
 };

@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import Login from "../views/Login.vue";
 import Home from "../views/Home.vue";
 import Manage from "../views/components/Manage.vue";
@@ -51,7 +51,7 @@ const routes: Array<RouteRecordRaw> = [
 // 定义路由器
 const router = createRouter({
   // 使用HTML5，需要在服务器下使用
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes,
 });
 

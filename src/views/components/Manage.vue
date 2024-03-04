@@ -13,7 +13,7 @@
       <div class="m-2">
         <n-config-provider :theme="currentTheme" class="flex">
           <n-upload
-            action="http://localhost:8080/upload"
+            action="https://admin.hastur23.top/api/upload"
             @finish="handleFinish"
             class="w-auto mr-2.5"
           >

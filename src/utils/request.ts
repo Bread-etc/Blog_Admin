@@ -3,8 +3,8 @@ import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, Inte
 import { useMessage } from "naive-ui";
 // 创建axios实例
 const service: AxiosInstance = axios.create({
-  baseURL: "http://43.139.65.244:8088",
-  timeout: 2000,
+  baseURL: "https://admin.hastur23.top/",
+  timeout: 5000,
 });
 
 // 请求拦截器
